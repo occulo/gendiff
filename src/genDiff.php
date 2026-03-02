@@ -1,6 +1,6 @@
 <?php
 
-namespace Differ;
+namespace Differ\Differ;
 
 use Hexlet\Code\Differ as DiffService;
 use Hexlet\Code\ParserFactory;
