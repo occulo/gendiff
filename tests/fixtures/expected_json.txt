@@ -2,6 +2,10 @@
     "common": {
         "status": "nested",
         "children": {
+            "follow": {
+                "status": "added",
+                "value": false
+            },
             "setting1": {
                 "status": "unchanged",
                 "value": "Value 1"
@@ -17,13 +21,19 @@
                     "new": null
                 }
             },
+            "setting4": {
+                "status": "added",
+                "value": "blah blah"
+            },
+            "setting5": {
+                "status": "added",
+                "value": {
+                    "key5": "value5"
+                }
+            },
             "setting6": {
                 "status": "nested",
                 "children": {
-                    "key": {
-                        "status": "unchanged",
-                        "value": "value"
-                    },
                     "doge": {
                         "status": "nested",
                         "children": {
@@ -36,24 +46,14 @@
                             }
                         }
                     },
+                    "key": {
+                        "status": "unchanged",
+                        "value": "value"
+                    },
                     "ops": {
                         "status": "added",
                         "value": "vops"
                     }
-                }
-            },
-            "follow": {
-                "status": "added",
-                "value": false
-            },
-            "setting4": {
-                "status": "added",
-                "value": "blah blah"
-            },
-            "setting5": {
-                "status": "added",
-                "value": {
-                    "key5": "value5"
                 }
             }
         }
