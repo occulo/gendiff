@@ -41,10 +41,10 @@ class StylishFormatter implements FormatterInterface
             return join(
                 "\n",
                 [
-                    $this->renderPrefix('added', $depth) . $key . ': ' .
-                    $this->stringifyValue($node['value']['new'], $depth),
                     $this->renderPrefix('removed', $depth) . $key . ': ' .
                     $this->stringifyValue($node['value']['old'], $depth),
+                    $this->renderPrefix('added', $depth) . $key . ': ' .
+                    $this->stringifyValue($node['value']['new'], $depth),
                 ]
             );
         }
