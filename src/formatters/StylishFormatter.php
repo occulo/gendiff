@@ -17,8 +17,7 @@ class StylishFormatter implements FormatterInterface
 
     public function format(array $data): string
     {
-        $output = join("\n", $this->renderLevel($data, 1));
-        return "{\n{$output}\n}\n";
+        return sprintf("{\n%s\n}\n", join("\n", $this->renderLevel($data, 1)));
     }
 
     private function renderLevel(array $data, int $depth): array
@@ -34,21 +33,39 @@ class StylishFormatter implements FormatterInterface
     {
         if ($node['status'] === 'nested') {
             $children = join("\n", $this->renderLevel($node['children'], ($depth + 1)));
-            return
-                "{$this->renderPrefix('nested', $depth)}{$key}: {\n{$children}\n{$this->getIndent($depth)}}";
+            return sprintf(
+                "%s%s: {\n%s\n%s}",
+                $this->renderPrefix('nested', $depth),
+                $key,
+                $children,
+                $this->getIndent($depth)
+            );
         }
         if ($node['status'] === 'changed') {
             return join(
                 "\n",
                 [
-                    "{$this->renderPrefix('removed', $depth)}{$key}: {$this->stringifyValue($node['value']['old'], $depth)}",
-                    "{$this->renderPrefix('added', $depth)}{$key}: {$this->stringifyValue($node['value']['new'], $depth)}",
+                    sprintf(
+                        "%s%s: %s",
+                        $this->renderPrefix('removed', $depth),
+                        $key,
+                        $this->stringifyValue($node['value']['old'], $depth)
+                    ),
+                    sprintf(
+                        "%s%s: %s",
+                        $this->renderPrefix('added', $depth),
+                        $key,
+                        $this->stringifyValue($node['value']['new'], $depth)
+                    ),
                 ]
             );
         }
-        return
-            "{$this->renderPrefix($node['status'], $depth)}{$key}: {$this->stringifyValue($node['value'], $depth)}";
-            
+        return sprintf(
+            "%s%s: %s",
+            $this->renderPrefix($node['status'], $depth),
+            $key,
+            $this->stringifyValue($node['value'], $depth)
+        );
     }
 
     private function stringifyValue(mixed $value, int $depth = 0): string
@@ -66,18 +83,26 @@ class StylishFormatter implements FormatterInterface
     {
         if (array_is_list($array)) {
             $lines = join("\n", array_map(
-                fn($value) => $this->getIndent($depth + 1) . $this->stringifyValue($value, ($depth + 1)),
+                fn($value) => sprintf(
+                    "%s%s",
+                    $this->getIndent($depth + 1),
+                    $this->stringifyValue($value, ($depth + 1))
+                ),
                 $array
             ));
-            return "[\n{$lines}\n{$this->getIndent($depth)}]";
+            return sprintf("[\n%s\n%s]", $lines, $this->getIndent($depth));
         }
         $lines = join("\n", array_map(
-            fn($key, $value) => $this->getIndent($depth + 1) . $key . ': ' .
-            $this->stringifyValue($value, ($depth + 1)),
+            fn($key, $value) => sprintf(
+                "%s%s: %s",
+                $this->getIndent($depth + 1),
+                $key,
+                $this->stringifyValue($value, ($depth + 1))
+            ),
             array_keys($array),
             $array
         ));
-        return "{\n{$lines}\n{$this->getIndent($depth)}}";
+        return sprintf("{\n%s\n%s}", $lines, $this->getIndent($depth));
     }
 
     private function stringifyBool(bool $value): string

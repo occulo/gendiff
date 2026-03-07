@@ -28,12 +28,21 @@ class PlainFormatter implements FormatterInterface
             return join("\n", $this->renderLevel($node['children'], $fullPath));
         }
         if ($node['status'] === 'changed') {
-            return "Property '{$fullPath}' was updated. From {$this->stringifyValue($node['value']['old'])} to {$this->stringifyValue($node['value']['new'])}";
+            return sprintf(
+                "Property '%s' was updated. From %s to %s",
+                $fullPath,
+                $this->stringifyValue($node['value']['old']),
+                $this->stringifyValue($node['value']['new'])
+            );
         }
         if ($node['status'] === 'added') {
-            return "Property '{$fullPath}' was added with value: {$this->stringifyValue($node['value'])}";
+            return sprintf(
+                "Property '%s' was added with value: %s",
+                $fullPath,
+                $this->stringifyValue($node['value'])
+            );
         }
-        return "Property '{$fullPath}' was removed";
+        return sprintf("Property '%s' was removed", $fullPath);
     }
 
     private function stringifyValue(mixed $value): string
