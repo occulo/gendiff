@@ -4,7 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Hexlet\Code\ParserFactory;
+use Hexlet\Code\Parser;
 use Hexlet\Code\FormatterFactory;
 use Hexlet\Code\Differ;
 
@@ -40,10 +40,10 @@ class FormatterTest extends TestCase
 
     private function getDiff($firstPath, $secondPath, $style)
     {
-        $firstFile = ParserFactory::build($firstPath)->parse($firstPath);
-        $secondFile = ParserFactory::build($secondPath)->parse($secondPath);
+        $firstFile = Parser::parse($firstPath);
+        $secondFile = Parser::parse($secondPath);
         $differ = new Differ();
-        $diff = $differ->genDiff($firstFile, $secondFile);
+        $diff = $differ->buildDiff($firstFile, $secondFile);
         return FormatterFactory::build($style)->format($diff);
     }
 

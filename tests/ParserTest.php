@@ -4,7 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Hexlet\Code\ParserFactory;
+use Hexlet\Code\Parser;
 
 class ParserTest extends TestCase
 {
@@ -25,7 +25,7 @@ class ParserTest extends TestCase
     #[DataProvider('fileProvider')]
     public function testParsing($filePath): void
     {
-        $actual = ParserFactory::build($filePath)->parse($filePath);
+        $actual = Parser::parse($filePath);
         $expected = require __DIR__ . '/fixtures/expected_parser.php';
         $this->assertEquals($expected, $actual);
     }
