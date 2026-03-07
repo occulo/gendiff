@@ -8,15 +8,16 @@ class PlainFormatter implements FormatterInterface
 {
     public function format(array $data): string
     {
-        return join("\n", $this->renderLevel($data)) . "\n";
+        $output = join("\n", $this->renderLevel($data));
+        return "{$output}\n";
     }
 
     private function renderLevel(array $data, string $path = ''): array
     {
-        $filtered = array_filter($data, fn($node) => $node['status'] !== 'unchanged');
+        $filteredKeys = array_filter($data, fn($node) => $node['status'] !== 'unchanged');
         return array_map(
-            fn($key) => $this->renderNode($key, $filtered[$key], $path),
-            array_keys($filtered)
+            fn($key) => $this->renderNode($key, $filteredKeys[$key], $path),
+            array_keys($filteredKeys)
         );
     }
 
@@ -27,13 +28,10 @@ class PlainFormatter implements FormatterInterface
             return join("\n", $this->renderLevel($node['children'], $fullPath));
         }
         if ($node['status'] === 'changed') {
-            return "Property '{$fullPath}' was updated. From " .
-                $this->stringifyValue($node['value']['old']) . " to " .
-                $this->stringifyValue($node['value']['new']);
+            return "Property '{$fullPath}' was updated. From {$this->stringifyValue($node['value']['old'])} to {$this->stringifyValue($node['value']['new'])}";
         }
         if ($node['status'] === 'added') {
-            return "Property '{$fullPath}' was added with value: " .
-            $this->stringifyValue($node['value']);
+            return "Property '{$fullPath}' was added with value: {$this->stringifyValue($node['value'])}";
         }
         return "Property '{$fullPath}' was removed";
     }

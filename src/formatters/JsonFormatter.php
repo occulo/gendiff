@@ -11,7 +11,7 @@ class JsonFormatter implements FormatterInterface
         try {
             return json_encode($data, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
-            throw new \Exception('Failed to encode data as JSON: ' . $e->getMessage(), 0, $e);
+            throw new \Exception("Failed to encode data as JSON: {$e->getMessage()}", 0, $e);
         }
     }
 }
