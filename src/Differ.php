@@ -10,7 +10,7 @@ class Differ
     private const STATUS_ADDED = 'added';
     private const STATUS_NESTED = 'nested';
 
-    public function genDiff(array $firstFile, array $secondFile): array
+    public function buildDiff(array $firstFile, array $secondFile): array
     {
         $keys = array_unique(array_merge(array_keys($firstFile), array_keys($secondFile)));
         sort($keys);
@@ -24,7 +24,7 @@ class Differ
             if ($this->isAssoc($firstFile[$key]) && $this->isAssoc($secondFile[$key])) {
                 return [
                     'status' => self::STATUS_NESTED,
-                    'children' => $this->genDiff($firstFile[$key], $secondFile[$key])
+                    'children' => $this->buildDiff($firstFile[$key], $secondFile[$key])
                 ];
             }
             if ($firstFile[$key] === $secondFile[$key]) {
