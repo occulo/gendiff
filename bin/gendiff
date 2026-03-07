@@ -24,6 +24,6 @@ $args = Docopt::handle($doc, array('version' => '1.0.0'));
 
 $firstPath = $args['<firstFile>'];
 $secondPath = $args['<secondFile>'];
-$format = $args['--format'] ?? 'stylish';
+$format = $args['--format'];
 
 echo genDiff($firstPath, $secondPath, $format);
