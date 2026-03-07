@@ -25,7 +25,7 @@ class Parser
         if (!file_exists($path)) {
             throw new \Exception("File not found: {$path}");
         }
-        return file_get_contents($path);
+        return file_get_contents($path) ?: throw new \Exception("Failed to read file: {$path}");
     }
 
     private static function getExtension(string $path): string
