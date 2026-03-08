@@ -2,6 +2,8 @@
 
 namespace Hexlet\Code;
 
+use Funct\Collection;
+
 class Differ
 {
     private const STATUS_UNCHANGED = 'unchanged';
@@ -12,8 +14,10 @@ class Differ
 
     public function buildDiff(array $firstFile, array $secondFile): array
     {
-        $keys = array_unique(array_merge(array_keys($firstFile), array_keys($secondFile)));
-        sort($keys);
+        $keys = Collection\sortBy(
+            array_unique(array_merge(array_keys($firstFile), array_keys($secondFile))),
+            fn($key) => $key
+        );
         $values = array_map(fn($key) => $this->buildNode($key, $firstFile, $secondFile), $keys);
         return array_combine($keys, $values);
     }
