@@ -17,7 +17,7 @@ class FormatterFactory
             'plain' => PlainFormatter::class,
             'json' => JsonFormatter::class,
         ];
-        if (!empty($formats)) {
+        if ($formats !== []) {
             $this->formats = $formats;
         }
     }
@@ -27,6 +27,7 @@ class FormatterFactory
         if (!isset($this->formats[$format])) {
             throw new \Exception("Unsupported format");
         }
-        return new $this->formats[$format]();
+        $formatterClass = $this->formats[$format];
+        return new $formatterClass();
     }
 }
