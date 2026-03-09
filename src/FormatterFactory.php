@@ -2,20 +2,28 @@
 
 namespace Hexlet\Code;
 
+use Hexlet\Code\Formatters\StylishFormatter;
+use Hexlet\Code\Formatters\PlainFormatter;
+use Hexlet\Code\Formatters\JsonFormatter;
+
 class FormatterFactory
 {
-    private const ALLOWED_FORMATS = [
-        'stylish' => \Hexlet\Code\formatters\StylishFormatter::class,
-        'plain' => \Hexlet\Code\formatters\PlainFormatter::class,
-        'json' => \Hexlet\Code\formatters\JsonFormatter::class,
-    ];
+    private array $formats;
 
-    public static function build(string $format = 'stylish'): FormatterInterface
+    public function __construct(array $formats = [])
     {
-        if (!isset(self::ALLOWED_FORMATS[$format])) {
-            throw new \Exception('Unsupported report format');
+        $this->formats = $formats ?: [
+            'stylish' => StylishFormatter::class,
+            'plain' => PlainFormatter::class,
+            'json' => JsonFormatter::class,
+        ];
+    }
+
+    public function build(string $format = 'stylish'): FormatterInterface
+    {
+        if (!isset($this->formats[$format])) {
+            throw new \Exception("Unsupported format");
         }
-        $formatterClass = self::ALLOWED_FORMATS[$format];
-        return new $formatterClass();
+        return new $this->formats[$format]();
     }
 }
