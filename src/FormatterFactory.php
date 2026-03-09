@@ -8,26 +8,17 @@ use Hexlet\Code\Formatters\JsonFormatter;
 
 class FormatterFactory
 {
-    private array $formats;
-
-    public function __construct(array $formats = [])
-    {
-        $this->formats = [
-            'stylish' => StylishFormatter::class,
-            'plain' => PlainFormatter::class,
-            'json' => JsonFormatter::class,
-        ];
-        if ($formats !== []) {
-            $this->formats = $formats;
-        }
-    }
+    private const DEFAULT_FORMATS = [
+        'stylish' => StylishFormatter::class,
+        'plain' => PlainFormatter::class,
+        'json' => JsonFormatter::class,
+    ];
 
     public function build(string $format = 'stylish'): FormatterInterface
     {
-        if (!isset($this->formats[$format])) {
+        if (!isset(self::DEFAULT_FORMATS[$format])) {
             throw new \Exception("Unsupported format");
         }
-        $formatterClass = $this->formats[$format];
-        return new $formatterClass();
+        return new (self::DEFAULT_FORMATS[$format])();
     }
 }
