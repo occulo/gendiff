@@ -17,7 +17,7 @@ class FormatterFactory
             'plain' => PlainFormatter::class,
             'json' => JsonFormatter::class,
         ];
-        if ($formats) {
+        if (!empty($formats)) {
             $this->formats = $formats;
         }
     }
