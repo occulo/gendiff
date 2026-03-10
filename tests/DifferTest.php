@@ -5,7 +5,7 @@ namespace Tests;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use Differ\Differ\GenDiff;
+use function Differ\Differ\genDiff;
 
 class DifferTest extends TestCase
 {
@@ -52,8 +52,7 @@ class DifferTest extends TestCase
     #[DataProvider('fileProvider')]
     public function testGenDiff(string $firstPath, string $secondPath): void
     {
-        $gendiff = new GenDiff();
-        $actual = $gendiff->genDiff($firstPath, $secondPath);
+        $actual = genDiff($firstPath, $secondPath);
         $expected = self::EXPECTED_OUTPUT['stylish'];
         $this->assertStringEqualsFile($expected, $actual);
     }
@@ -61,8 +60,7 @@ class DifferTest extends TestCase
     #[DataProvider('fileAndFormatProvider')]
     public function testGenDiffWithFormat(string $firstPath, string $secondPath, string $format): void
     {
-        $gendiff = new GenDiff();
-        $actual = $gendiff->genDiff($firstPath, $secondPath, $format);
+        $actual = genDiff($firstPath, $secondPath, $format);
         $expected = self::EXPECTED_OUTPUT[$format];
         $this->assertStringEqualsFile($expected, $actual);
     }
