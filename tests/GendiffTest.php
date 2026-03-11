@@ -1,13 +1,12 @@
 <?php
 
-namespace Tests;
+namespace Occulo\Gendiff\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Occulo\Gendiff\Gendiff;
 
-use function Differ\Differ\genDiff;
-
-class DifferTest extends TestCase
+class GendiffTest extends TestCase
 {
     private const FIXTURES_DIR = __DIR__ . '/fixtures';
 
@@ -50,17 +49,19 @@ class DifferTest extends TestCase
     }
 
     #[DataProvider('fileProvider')]
-    public function testGenDiff(string $firstPath, string $secondPath): void
+    public function testBuild(string $firstPath, string $secondPath): void
     {
-        $actual = genDiff($firstPath, $secondPath);
+        $gendiff = new Gendiff();
+        $actual = $gendiff->build($firstPath, $secondPath);
         $expected = self::EXPECTED_OUTPUT['stylish'];
         $this->assertStringEqualsFile($expected, $actual);
     }
 
     #[DataProvider('fileAndFormatProvider')]
-    public function testGenDiffWithFormat(string $firstPath, string $secondPath, string $format): void
+    public function testBuildWithFormat(string $firstPath, string $secondPath, string $format): void
     {
-        $actual = genDiff($firstPath, $secondPath, $format);
+        $gendiff = new Gendiff();
+        $actual = $gendiff->build($firstPath, $secondPath, $format);
         $expected = self::EXPECTED_OUTPUT[$format];
         $this->assertStringEqualsFile($expected, $actual);
     }
