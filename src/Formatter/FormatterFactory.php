@@ -1,10 +1,10 @@
 <?php
 
-namespace Hexlet\Code;
+namespace Occulo\Gendiff\Formatter;
 
-use Hexlet\Code\Formatters\StylishFormatter;
-use Hexlet\Code\Formatters\PlainFormatter;
-use Hexlet\Code\Formatters\JsonFormatter;
+use Occulo\Gendiff\Formatter\StylishFormatter;
+use Occulo\Gendiff\Formatter\PlainFormatter;
+use Occulo\Gendiff\Formatter\JsonFormatter;
 
 class FormatterFactory
 {

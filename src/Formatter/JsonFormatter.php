@@ -1,8 +1,8 @@
 <?php
 
-namespace Hexlet\Code\Formatters;
+namespace Occulo\Gendiff\Formatter;
 
-use Hexlet\Code\FormatterInterface;
+use Occulo\Gendiff\Formatter\FormatterInterface;
 
 class JsonFormatter implements FormatterInterface
 {
