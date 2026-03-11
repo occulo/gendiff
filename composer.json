@@ -1,17 +1,25 @@
 {
-    "name": "hexlet/code",
+    "name": "occulo/gendiff",
     "description": "A PHP-based diff generator for files",
+    "type": "library",
     "license": "MIT",
+    "support": {
+        "issues": "https://github.com/occulo/gendiff/issues",
+        "source": "https://github.com/occulo/gendiff"
+    },
     "bin": ["bin/gendiff"],
     "autoload": {
         "psr-4": {
-            "Hexlet\\Code\\": "src/"
-        },
-        "files": [
-            "src/genDiff.php"
-        ]
+            "Occulo\\Gendiff\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Occulo\\Gendiff\\Tests\\": "tests/"
+        }
     },
     "require": {
+        "php": "^8.3",
         "docopt/docopt": "^1.0",
         "symfony/yaml": "^7.4",
         "funct/funct": "^1.6"
